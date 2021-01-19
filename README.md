@@ -5,13 +5,19 @@ but more in Object oriented fashion.
 
 This is a simple context-free grammar parser, in Python3.
 
-My try to build a Parser for a PCF Grammar
-
-#
-
-The code isn't by any means perfect and isn't supposed to.
 **Feel free to use any piece of the code in your own projects.**
 
+## Structure
+
++ Main folder
+    + cfg.py *main file*
+    + README.md *this document*
+    + data
+        + rules.txt *the phrase structure grammar rules*
+        + normalized.json *a backup of the grammar in json format, for future load*
+    + classes
+        + grammar.py *Implementation of the CFGGrammar class*
+        + parser.py *Implementation of the Parser class + some other useful functions*
 
 ## Rules
 *Here example of rules*
@@ -49,4 +55,6 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 ## TO DO
 
 + Implement a function to draw parsed sentences as tree
++ Clean the classes
 + Remove duplicates from `self.rules_dict`
++ Implement some new feature

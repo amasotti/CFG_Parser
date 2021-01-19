@@ -25,7 +25,7 @@ if __name__ == '__main__':
         SENTENCE =  "as sentence"
         sentence = input('Give me a sentence: ') # insert sentence as input from user
         sentence = sentence.lower()
-        PARSER = Parser("rules.txt", sentence)
+        PARSER = Parser("../data/rules.txt", sentence)
         PARSER.parse()
         PARSER.print_tree()
 
