@@ -3,7 +3,7 @@ __date__ = "Jan 2021"
 
 
 """
-DOC:
+DOC: Main file of the CFG-Parser
 
 """
 
@@ -12,33 +12,18 @@ DOC:
 from classes.parser import  *
 from pprint import pprint
 
-"""
-print('testing')
-
-grammar = CFGGrammar(rules_as_file="./rules.txt",parser=None)
-pprint(grammar.rules,compact=True)
-
-res = grammar.chomskyan_normal_form()
-print("\n"*4)
-pprint(res)
-print("\n"*4)
-
-pprint(grammar.rules,compact=True)
-pprint(grammar.rules_dict,compact=True)
-grammar.to_json(output_path="./cfg_normalform.json")
-"""
-
-
 if __name__ == '__main__':
     ARGUMENTS = sys.argv
     if len(ARGUMENTS) > 3 or len(ARGUMENTS) == 2:
         print("Usage: python3 Parser.py <grammar.file> <sentence.file>\n"
               "or: python3 Parser.py <grammar as string> <sentence as string>")
-    else:
+    ################## WORK IN PROGRESS #####################################
+    ## The following lines define some parameters just for testing sake
+    ########################################################################
+    else: 
         GRAMMAR = "as path for the grammar"
         SENTENCE =  "as sentence"
-        gram = CFGGrammar(parser=None,rules_as_file="./rules.txt")
-        sentence = input('Give me a sentence: ')
+        sentence = input('Give me a sentence: ') # insert sentence as input from user
         sentence = sentence.lower()
         PARSER = Parser("rules.txt", sentence)
         PARSER.parse()
