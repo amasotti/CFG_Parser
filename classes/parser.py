@@ -7,7 +7,7 @@ Implementation of the Parser as class
 import sys
 import os.path
 
-try:
+try: # TODO: check this try-except block
     from .grammar import CFGGrammar
 except (SystemError, ImportError):
     from classes.grammar import CFGGrammar
@@ -44,6 +44,7 @@ def generate_tree(node):
 class Parser(object):
 
     def __init__(self, grammar, sentence,parse_table=None):
+
         self.parse_table = parse_table
         self.prods = {}
         self.grammar = None
@@ -88,7 +89,7 @@ class Parser(object):
 
     def parse(self):
         """
-        Does the actual parsing according to the CYK algorithm. The parse table is stored in
+        Does the actual parsing according to the Cocke-Younger-Kasami algorithm. The parse table is stored in
         self.parse_table.
         """
         length = len(self.input)
@@ -142,7 +143,11 @@ class Parser(object):
             print("The given sentence is not contained in the language produced by the given "
                   "grammar!")
 
+    def draw_tree(self):
+        # TODO
+        # probably using svgling https://pypi.org/project/svgling/
+        pass
 
-def __repr__(self):
-    return 'Parser for CFG Grammars'
+    def __repr__(self):
+        return 'Parser for CFG Grammars'
 
