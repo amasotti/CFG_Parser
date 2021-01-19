@@ -45,8 +45,7 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 # Main modifications
 
 + Grammar and Parser are now implemented as classes
-+ Each class has some new methods:
-    + save, load
++ Each class has some new methods
 
 # How does it work:
 
