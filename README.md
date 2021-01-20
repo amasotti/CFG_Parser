@@ -46,14 +46,16 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 
 + Grammar and Parser are now implemented as classes
 + Each class has some new methods
++ New rule file: `rules_usami.txt` from [usami/pcfg](https://github.com/usami/pcfg)
++ Minor code improvement (I hope)
 + Parser
     + The tree is printed with round parenthesis (for compatibility with some nltk tree tools)
     + *grammar_from_file* and *grammar_from_string* were collapsed into the new method *load_grammar*
     + Start symbol fixed as "S"
-    + The parser searches (after the CYK-Algorithm) if there are alternative derivations
+    + The parser searches (after the CYK-Algorithm) if there are alternative derivations. If you want only
+    derivations starting from 'S', you can pass the bool param. `only_s` to the method `.to_tree`
 + Grammar class
-    + Deleted option to give a single rule via string input *I think it makes things more complicated, and one can still test single
-rules using the text file*
+    + Deleted option to give a single rule via string input *I think it makes things more complicated, and one can still test single rules using the text file*
     + Possibility to load previously normalized grammar from json
 
 
@@ -64,9 +66,11 @@ rules using the text file*
 
 ## TO DO
 + <del>Class implementation for Grammar<del>
-+ Implement a function to draw parsed sentences as tree
 + <del>Remove duplicates from `self.rules_dict`<del>
-+ Allow self.input (Parser) to parse  more than one sentence in batch
-+ Implement probabilistic CFG
 + <del>The Parsing should search for alternative paths<del>
 + Find nicer ways to check for duplicates in trees (Parser) and in self.rules_dict (Grammar)
++ Allow self.input (Parser) to parse  more than one sentence in batch
++ Implement probabilistic CFG
++ Check if everything is ok with the method `self.to_tree` (in Parser), then delete `self.print_tree()`
++ Returned trees should be tuples: (number, tree), to allow for further process
++ Implement a function to draw parsed sentences as tree

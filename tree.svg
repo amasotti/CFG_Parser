@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="168px" preserveAspectRatio="xMidYMid meet" style="font-family: times, serif; font-weight:normal; font-style: normal; font-size: 16px;" version="1.1" viewBox="0,0,168.0,168.0" width="168px">
+  <defs/>
+  <svg width="100%" x="0" y="0em">
+    <defs/>
+    <text text-anchor="middle" x="50%" y="1em">S</text>
+  </svg>
+  <svg width="57.1429%" x="0%" y="3em">
+    <defs/>
+    <svg width="100%" x="0" y="0em">
+      <defs/>
+      <text text-anchor="middle" x="50%" y="1em">NP</text>
+    </svg>
+    <svg width="50%" x="0%" y="3em">
+      <defs/>
+      <svg width="100%" x="0" y="0em">
+        <defs/>
+        <text text-anchor="middle" x="50%" y="1em">NOUN</text>
+      </svg>
+      <svg width="100%" x="0%" y="3em">
+        <defs/>
+        <svg width="100%" x="0" y="0em">
+          <defs/>
+          <text text-anchor="middle" x="50%" y="1em">I</text>
+        </svg>
+      </svg>
+      <line stroke="black" x1="50%" x2="50%" y1="1.2em" y2="3em"/>
+    </svg>
+    <line stroke="black" x1="50%" x2="25%" y1="1.2em" y2="3em"/>
+    <svg width="50%" x="50%" y="3em">
+      <defs/>
+      <svg width="100%" x="0" y="0em">
+        <defs/>
+        <text text-anchor="middle" x="50%" y="1em">NOUN</text>
+      </svg>
+      <svg width="100%" x="0%" y="3em">
+        <defs/>
+        <svg width="100%" x="0" y="0em">
+          <defs/>
+          <text text-anchor="middle" x="50%" y="1em">saw</text>
+        </svg>
+      </svg>
+      <line stroke="black" x1="50%" x2="50%" y1="1.2em" y2="3em"/>
+    </svg>
+    <line stroke="black" x1="50%" x2="75%" y1="1.2em" y2="3em"/>
+  </svg>
+  <line stroke="black" x1="50%" x2="28.5714%" y1="1.2em" y2="3em"/>
+  <svg width="42.8571%" x="57.1429%" y="3em">
+    <defs/>
+    <svg width="100%" x="0" y="0em">
+      <defs/>
+      <text text-anchor="middle" x="50%" y="1em">NP+PRON</text>
+    </svg>
+    <svg width="100%" x="0%" y="6em">
+      <defs/>
+      <svg width="100%" x="0" y="0em">
+        <defs/>
+        <text text-anchor="middle" x="50%" y="1em">him</text>
+      </svg>
+    </svg>
+    <line stroke="black" x1="50%" x2="50%" y1="1.2em" y2="6em"/>
+  </svg>
+  <line stroke="black" x1="50%" x2="78.5714%" y1="1.2em" y2="3em"/>
+</svg>

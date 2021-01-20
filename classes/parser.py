@@ -40,9 +40,9 @@ def generate_tree(node):
     :return: the parse tree in string form.
     """
     if node.child2 == None:
-        return f"({node.symbol} '{node.child1}')"
+        return f"""("{node.symbol}", "{node.child1}")"""
     else:
-        return f"({node.symbol} {generate_tree(node.child1)} {generate_tree(node.child2)})"
+        return f"""("{node.symbol}", {generate_tree(node.child1)}, {generate_tree(node.child2)})"""
 
 class Parser(object):
 
@@ -97,7 +97,7 @@ class Parser(object):
                 self.grammar = gram.chomskyan_normal_form()
                 if save:
                     gram.to_json(output_path=output)
-            print('Grammar loaded:')
+            print('Grammar loaded; Length:',str(len(self.grammar)))
         except (SystemError, IOError, ImportError):
             raise('File path not found')
 
@@ -136,9 +136,6 @@ class Parser(object):
                             self.parse_table[words_to_consider - 1][starting_cell].extend(
                                 [Node(rule[0], left, right) for left in left_nodes for right in right_nodes]
                             )
-        print('Parsed table:')
-        for regel in self.parse_table:
-            pprint(regel)
 
     def print_tree(self, output=True):
         """
@@ -162,7 +159,7 @@ class Parser(object):
         else:
             print("This sentence cannot be produced!")
 
-    def to_tree(self, output=True):
+    def to_tree(self, output=True,only_s = False):
         """
         Print the parse tree starting with the start symbol. Alternatively it returns the string
         representation of the tree(s) instead of printing it.
@@ -171,35 +168,28 @@ class Parser(object):
         start_symbol = self.start_symbol
 
         # extract all the possible derivation in the highest tier of the CYK-table
-        final_parsing = [n for n in self.parse_table[-1][0]]
+        if only_s:
+            final_parsing = [n for n in self.parse_table[-1][0] if n.symbol == start_symbol]
+        else:
+            final_parsing = [n for n in self.parse_table[-1][0]]
         trees = []
         for derivation in final_parsing:
-            if derivation.symbol == start_symbol: # one derivation already appears as "S"
-                trees.append([generate_tree(derivation)])
+            trees.append(generate_tree(derivation))
+        if trees:
+            # prune duplicates #TODO find a nicer way to do it
+            new_tree = []
+            for i in trees:
+                if i not in new_tree:
+                    new_tree.append(i)
+            if output:
+                print("The sentence is well-formed")
+                print("\nPossible parse(s):")
+                for i, tree in enumerate(new_tree):
+                    print(str(i) +"\t"+str(tree))
             else:
-                print(f"{derivation}\t{type(derivation)}")
-                for rule in self.grammar:
-                    print(rule)
-                    if rule[1] == derivation.symbol:
-                        if rule[2]:
-                            node = Node(symbol=rule[0], child1=rule[1],child2=rule[2])
-                        else:
-                            node = Node(symbol=rule[0], child1=rule[1])
-                        trees.append(generate_tree(node))
-            if trees:
-                # prune duplicates #TODO find a nicer way to do it
-                new_tree = []
-                for i in trees:
-                    if i not in new_tree:
-                        new_tree.append(i)
-                if output:
-                    print("The sentence is well-formed")
-                    print("\nPossible parse(s):")
-                    print(new_tree)
-                else:
-                    return new_tree
-            else:
-                print('The sentence is not well-formed')
+                return new_tree
+        else:
+            print('The sentence is not well-formed')
 
     def draw_tree(self):
         # TODO

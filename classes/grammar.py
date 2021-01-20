@@ -115,8 +115,8 @@ class CFGGrammar(object):
             else:
                 if rule[1:] not in self.rules_dict[rule[0]]:
                     self.add_rule(rule)
-        for k,v in self.rules_dict.items():
-            print(str(k) +"\t" + str(v))
+        #for k,v in self.rules_dict.items():
+            #print(str(k) +"\t" + str(v))
         return result
 
     def to_json(self,output_path):

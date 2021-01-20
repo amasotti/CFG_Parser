@@ -56,10 +56,9 @@ if __name__ == '__main__':
     ## The following lines define some parameters just for testing sake
     ########################################################################
     else:
-        GRAMMAR =  os.path.abspath("data/rules.txt")
-        SENTENCE = input('Give me a sentence: ').lower()
+        GRAMMAR =  os.path.abspath("data/rules_usami.txt")
+        SENTENCE = input('Give me a sentence: ')
         print(f"Using {GRAMMAR} as testing path and '{SENTENCE}' as sentence.")
         PARSER = Parser(GRAMMAR, SENTENCE)
         PARSER.parse()
-        PARSER.to_tree()
-        #PARSER.print_tree()
+        PARSER.to_tree(output=True)
