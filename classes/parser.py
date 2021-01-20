@@ -8,14 +8,14 @@ Thi file contains the implementation of the following classes:
 """
 import os
 import os.path
-from pprint import pprint
 import svgling
 import nltk
 
-try: # TODO: check this try-except block
+try:
     from .grammar import CFGGrammar
 except (SystemError, ImportError):
     from classes.grammar import CFGGrammar
+
 
 class Node(object):
     """
@@ -26,7 +26,8 @@ class Node(object):
     where according to the ambiguous rule).
     Either child1 is a terminal symbol passed as string, or both children are Nodes.
     """
-    def __init__(self,symbol,child1,child2=None):
+
+    def __init__(self, symbol, child1, child2=None):
         self.symbol = symbol
         self.child1 = child1
         self.child2 = child2
@@ -41,18 +42,19 @@ def generate_tree(node):
     :param node: the root node.
     :return: the parse tree in string form.
     """
-    if node.child2 == None:
+    if node.child2 is None:
         return f"""("{node.symbol}", "{node.child1}")"""
     else:
         return f"""("{node.symbol}", {generate_tree(node.child1)}, {generate_tree(node.child2)})"""
 
+
 class Parser(object):
 
-    def __init__(self, grammar, sentence,parse_table=None):
+    def __init__(self, grammar, sentence, parse_table=None):
 
         self.prods = {}
 
-        self.start_symbol = "S" # define start symbol
+        self.start_symbol = "S"  # define start symbol
 
         # Load the PSG rules either from file or from json
         self.grammar = None
@@ -61,14 +63,14 @@ class Parser(object):
 
         self.__call__(sentence)
 
-    def __call__(self, sentence,parse=False):
+    def __call__(self, sentence, parse=False):
         """
         Parse the given sentence (string or file) with the earlier given grammar.
         :param sentence: the sentence to parse with self.grammar
         """
 
         if os.path.isfile(sentence):
-            with open(sentence,'r') as inp:
+            with open(sentence, 'r') as inp:
                 self.input = inp.readlines().split()
                 # TODO must be check but I think we need
                 # self.input = [x.split() for x in self.input]
@@ -77,7 +79,7 @@ class Parser(object):
         if parse:
             self.parse()
 
-    def load_grammar(self,grammar,save=True,output="./data/normalized.json"):
+    def load_grammar(self, grammar, save=True, output="./data/normalized.json"):
         """
         Reads in a CFG from a given file, converts it to CNF and stores it in self.grammar.
 
@@ -100,7 +102,7 @@ class Parser(object):
                 if save:
                     gram.to_json(output_path=output)
         except (SystemError, IOError, ImportError):
-            raise('File path not found')
+            print('File path not found')
 
     def parse(self):
         """
@@ -110,7 +112,7 @@ class Parser(object):
         length = len(self.input)
         # self.parse_table[y][x] is the list of nodes in the x+1 cell of y+1 row in the table.
         # That cell covers the word below it and y more words after.
-        self.parse_table = [[[] for x in range(length - y)] for y in range(length)]
+        self.parse_table = [[[] for _ in range(length - y)] for y in range(length)]
 
         # First tier of the CYK Algorithm, look at each word as terminal nodes
         for i, word in enumerate(self.input):
@@ -145,7 +147,7 @@ class Parser(object):
         """
 
         start_symbol = "S"
-        #final_parsing = [n for n in self.parse_table[-1][0]]
+        # final_parsing = [n for n in self.parse_table[-1][0]]
         final_nodes = [n for n in self.parse_table[-1][0] if n.symbol == start_symbol]
         if final_nodes:
             if output:
@@ -160,7 +162,7 @@ class Parser(object):
         else:
             print("This sentence cannot be produced!")
 
-    def to_tree(self, output=True,only_s = False,draw=True):
+    def to_tree(self, output=True, only_s=False, draw=True):
         """
         Print the parse tree starting with the start symbol. Alternatively it returns the string
         representation of the tree(s) instead of printing it.
@@ -180,7 +182,7 @@ class Parser(object):
             # clean duplicats
             trees = list(dict.fromkeys(trees))
             # trasnform in dictionary
-            new_trees = {str(i) : tree for i, tree in enumerate(trees)}
+            new_trees = {str(i): tree for i, tree in enumerate(trees)}
             if output:
                 print("The sentence is well-formed")
                 print("\nPossible parse(s):")
@@ -196,11 +198,10 @@ class Parser(object):
                             else:
                                 self.draw_tree_nltk(new_trees[index])
                         except TypeError:
-                            raise('Wrong index, aborting...')
+                            print('Wrong index, aborting...')
             return new_trees
         else:
             print('The sentence is not well-formed')
-
 
     @staticmethod
     def draw_tree_nltk(tree):
@@ -209,18 +210,17 @@ class Parser(object):
 
     @staticmethod
     def draw_tree_svgling(tree):
-       """
+        """
        The same as before, but uses svgling
        :param tree:
        :return:
        """
-       tree = svgling.draw_tree(tree, leaf_nodes_align=True)
-       print(f"Printing following tree:\n{tree}")
-       picture = tree.get_svg()
-       picture.saveas("./data/tree_test.svg")
-       with open("./data/tree_test.svg", 'w',encoding='utf-8') as pic:
-           picture.write(pic,pretty=True,indent=2)
+        tree = svgling.draw_tree(tree, leaf_nodes_align=True)
+        print(f"Printing following tree:\n{tree}")
+        picture = tree.get_svg()
+        picture.saveas("./data/tree_test.svg")
+        with open("./data/tree_test.svg", 'w', encoding='utf-8') as pic:
+            picture.write(pic, pretty=True, indent=2)
 
     def __repr__(self):
         return 'Parser for CFG Grammars'
-
