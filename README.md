@@ -71,7 +71,7 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 + <del>Class implementation for Grammar<del>
 + <del>Remove duplicates from `self.rules_dict`<del>
 + <del>The Parsing should search for alternative paths<del>
-+ Find nicer ways to check for duplicates in trees (Parser) and in self.rules_dict (Grammar)
++ <del>Find nicer ways to check for duplicates in trees (Parser) and in self.rules_dict (Grammar)<del>
 + Allow self.input (Parser) to parse  more than one sentence in batch
 + Implement probabilistic CFG
 + Check if everything is ok with the method `self.to_tree` (in Parser), then delete `self.print_tree()`

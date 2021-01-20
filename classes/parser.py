@@ -9,6 +9,8 @@ Thi file contains the implementation of the following classes:
 import os
 import os.path
 from pprint import pprint
+import svgling
+import nltk
 
 try: # TODO: check this try-except block
     from .grammar import CFGGrammar
@@ -97,7 +99,6 @@ class Parser(object):
                 self.grammar = gram.chomskyan_normal_form()
                 if save:
                     gram.to_json(output_path=output)
-            print('Grammar loaded; Length:',str(len(self.grammar)))
         except (SystemError, IOError, ImportError):
             raise('File path not found')
 
@@ -159,7 +160,7 @@ class Parser(object):
         else:
             print("This sentence cannot be produced!")
 
-    def to_tree(self, output=True,only_s = False):
+    def to_tree(self, output=True,only_s = False,draw=True):
         """
         Print the parse tree starting with the start symbol. Alternatively it returns the string
         representation of the tree(s) instead of printing it.
@@ -176,25 +177,49 @@ class Parser(object):
         for derivation in final_parsing:
             trees.append(generate_tree(derivation))
         if trees:
-            # prune duplicates #TODO find a nicer way to do it
-            new_tree = []
-            for i in trees:
-                if i not in new_tree:
-                    new_tree.append(i)
+            # clean duplicats
+            trees = list(dict.fromkeys(trees))
+            # trasnform in dictionary
+            new_trees = {str(i) : tree for i, tree in enumerate(trees)}
             if output:
                 print("The sentence is well-formed")
                 print("\nPossible parse(s):")
-                for i, tree in enumerate(new_tree):
-                    print(str(i) +"\t"+str(tree))
-            else:
-                return new_tree
+                for k, v in new_trees.items():
+                    print(f"{k} \t str{v}")
+                if draw:
+                    while True:
+                        print('Choose the index of a tree to draw it or -1 to quit')
+                        try:
+                            index = input('Index: ')
+                            if index == "-1":
+                                break
+                            else:
+                                self.draw_tree_nltk(new_trees[index])
+                        except TypeError:
+                            raise('Wrong index, aborting...')
+            return new_trees
         else:
             print('The sentence is not well-formed')
 
-    def draw_tree(self):
-        # TODO
-        # probably using svgling https://pypi.org/project/svgling/
-        pass
+
+    @staticmethod
+    def draw_tree_nltk(tree):
+        tree = nltk.Tree.fromstring(tree)
+        tree.draw()
+
+    @staticmethod
+    def draw_tree_svgling(tree):
+       """
+       The same as before, but uses svgling
+       :param tree:
+       :return:
+       """
+       tree = svgling.draw_tree(tree, leaf_nodes_align=True)
+       print(f"Printing following tree:\n{tree}")
+       picture = tree.get_svg()
+       picture.saveas("./data/tree_test.svg")
+       with open("./data/tree_test.svg", 'w',encoding='utf-8') as pic:
+           picture.write(pic,pretty=True,indent=2)
 
     def __repr__(self):
         return 'Parser for CFG Grammars'
