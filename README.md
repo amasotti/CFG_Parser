@@ -58,7 +58,7 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
     + Deleted option to give a single rule via string input *I think it makes things more complicated, and one can still test single rules using the text file*
     + Possibility to load previously normalized grammar from json
 
-+ *work in progress*: Draw Tree as svg:
++ *work in progress*: Draw Tree as svg, see below:
 
 ![tree](./tree.svg)
 
