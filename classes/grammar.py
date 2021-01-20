@@ -6,22 +6,21 @@ The Grammar class
 
 from collections import defaultdict
 import json
-
+import os
 
 
 class CFGGrammar(object):
 
-    def __init__(self, parser, rules_as_file=None):
-        # which elements should be here?
-
-        if rules_as_file is not None:
-            print('Loading rules from file')
-            self.rules = self.from_file(rules_as_file)
-
-        self.rules_dict = defaultdict(list)
-
-        self._parser = parser
-
+    def __init__(self, raw_rules=None,json_backup=None):
+        try:
+            self.rules_dict = defaultdict(list)
+            self.rules = list()
+            if raw_rules is not None:
+                self.from_txt(fp=raw_rules)
+            elif json_backup is not None:
+                self.from_json(fp=json_backup)
+        except:
+            raise("No rules were provided")
 
     def add_rule(self, rule):
         '''
@@ -33,8 +32,13 @@ class CFGGrammar(object):
         self.rules_dict[rule[0]].append(rule[1:])
 
 
-    @staticmethod
-    def from_file(fp) -> list:
+    def from_txt(self, fp):
+        """
+        Reads the input rules from a file and saves them as attribute of the class
+        These will be further processed with .chomskyan_normal_form()
+        :param fp: the path to the txt file with the rules
+        :return: updates the attribute self.rules
+        """
         # extract rules from file and process them
         with open(fp, 'r', encoding='utf-8') as grammar:
             rules = grammar.readlines()
@@ -52,10 +56,13 @@ class CFGGrammar(object):
                 new_rules.append(rule_2)
             else:
                 new_rules.append(r)
-        return new_rules
+        self.rules = new_rules
 
+    def from_json(self,fp):
+        with open(fp, 'r') as rules:
+            self.rules_dict = json.load(rules)
 
-    def chomskyan_normal_form(self):
+    def chomskyan_normal_form(self) -> list:
         '''
         Main function, normalizes the grammar into the Chomsky normal form
 
@@ -101,13 +108,15 @@ class CFGGrammar(object):
                         self.add_rule(new_rule)
 
         # Last check and/or expansion
+        # TODO Not so nice, but needed to prevent that something goes lost from self.rules to self.rules_dict
         for rule in result:
             if rule[0] not in self.rules_dict:
                 self.add_rule(rule)
             else:
                 if rule[1:] not in self.rules_dict[rule[0]]:
                     self.add_rule(rule)
-
+        for k,v in self.rules_dict.items():
+            print(str(k) +"\t" + str(v))
         return result
 
     def to_json(self,output_path):
@@ -117,12 +126,8 @@ class CFGGrammar(object):
         except:
             print('You can save the CFG in the Chomskyan normal form, only if you previously transformed it using the .chomskyan_normal_form() method')
 
-    def tree(self, sentence):
-        # print a visualization of the tree associated with a sentence
-        pass
-
-    def calculate_p(self, tree):
-        pass
-
     def __repr__(self):
         return 'Context Free Grammar'
+
+    def __len__(self):
+        return len(self.rules_dict)

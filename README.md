@@ -46,14 +46,26 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 
 + Grammar and Parser are now implemented as classes
 + Each class has some new methods
++ Parser
+    + The tree is printed with round parenthesis (for compatibility with some nltk tree tools)
+    + *grammar_from_file* and *grammar_from_string* were collapsed into the new method *load_grammar*
+    + Start symbol fixed as "S"
++ Grammar class
+    + Deleted option to give a single rule via string input *I think it makes things more complicated, and one can still test single
+rules using the text file*
+    + Possibility to load previously normalized grammar from json
 
+
++ *Added ASCII art - for fun ;)*
 # How does it work:
 
 *Still in development*
 
 ## TO DO
-
++ <del>Class implementation for Grammar<del>
 + Implement a function to draw parsed sentences as tree
-+ Clean the classes
-+ Remove duplicates from `self.rules_dict`
-+ Implement some new feature
++ <del>Remove duplicates from `self.rules_dict`<del>
++ Allow self.input (Parser) to parse  more than one sentence in batch
++ Implement probabilistic CFG
++ <del>The Parsing should search for alternative paths<del>
++ Find nicer ways to check for duplicates in trees (Parser) and in self.rules_dict (Grammar)

@@ -1,26 +1,16 @@
-S -> VP NP
-S -> VP
-S -> NP VP NP
-S -> NP VP
-S -> VP NP
-S -> D N
-
-VP -> V NP
-VP -> V PP
-VP -> NP V NP
-
-NP -> D N
-NP -> D N PP
-NP -> N
-NP -> N | D N
-NP -> D N
-NP -> D NP
+D -> 'the'
+D -> 'that'
 
 N -> 'dog'
 N -> 'cat'
-
-V -> 'catches'
+N -> 'child'
+N -> 'john'
 V -> 'sees'
+V -> 'plays'
 
-D -> 'the'
-D -> 'that'
+NP -> N
+VP -> N V
+
+S -> VP
+S -> N V
+S -> NP V
