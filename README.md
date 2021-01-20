@@ -50,6 +50,7 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
     + The tree is printed with round parenthesis (for compatibility with some nltk tree tools)
     + *grammar_from_file* and *grammar_from_string* were collapsed into the new method *load_grammar*
     + Start symbol fixed as "S"
+    + The parser searches (after the CYK-Algorithm) if there are alternative derivations
 + Grammar class
     + Deleted option to give a single rule via string input *I think it makes things more complicated, and one can still test single
 rules using the text file*
