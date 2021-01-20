@@ -1,7 +1,7 @@
 import svgling
 
 
-test = ("S", ("NP", ("NOUN", "I"), ("NOUN", "saw")), ("NP+PRON", "him"))
+test = ("S", ("NP+PRON", "I"), ("VP", ("VERB", "saw"), ("NP+PRON", "him")))
 
 
 tree = svgling.draw_tree(test,leaf_nodes_align=True)
