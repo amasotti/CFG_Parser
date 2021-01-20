@@ -65,15 +65,18 @@ The Parser will use this sign to distinguish terminal from non terminal nodes:
 + *Added ASCII art - for fun ;)*
 # How does it work:
 
-*Still in development*
++ Grammar from file, sentence (at the moment, only a single sentence) from file:
+>python3 cfg.py <grammar path> <sentence path>
 
-## TO DO
-+ <del>Class implementation for Grammar<del>
-+ <del>Remove duplicates from `self.rules_dict`<del>
-+ <del>The Parsing should search for alternative paths<del>
-+ <del>Find nicer ways to check for duplicates in trees (Parser) and in self.rules_dict (Grammar)<del>
-+ Allow self.input (Parser) to parse  more than one sentence in batch
-+ Implement probabilistic CFG
-+ Check if everything is ok with the method `self.to_tree` (in Parser), then delete `self.print_tree()`
-+ Returned trees should be tuples: (number, tree), to allow for further process
-+ Implement a function to draw parsed sentences as tree
++ Grammar from file, sentence from input (stdin):
+> python3 cfg.py <grammar path> <sentence>
+
++ Default grammar ("data/rules_usami.txt") and sentence from input
+> python3 cfg.py 
+
+The Parser has several boolean parameters:
+   + output (default `True`) : prints the parsings
+   + only_s (default `False`) : search only for parsings which begin with start symbol "S" 
+   + draw  (default `True`) : use NLTK to draw trees (these can be saved as .ps files)
+
+

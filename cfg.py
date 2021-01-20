@@ -39,9 +39,16 @@ if __name__ == '__main__':
     # Welcome
     ascii_logo()
     ARGUMENTS = sys.argv
-    if len(ARGUMENTS) > 3 or len(ARGUMENTS) == 2:
-        print("Usage: python3 Parser.py <grammar.file> <sentence.file>\n"
-              "or: python3 Parser.py <grammar as string> <sentence as string>")
+    ################## WORK IN PROGRESS #####################################
+    ## The following lines define some parameters just for testing sake
+    ########################################################################
+    if len(ARGUMENTS) == 1: # no argument given --> test with default
+        GRAMMAR = os.path.abspath("data/rules_usami.txt")
+        SENTENCE = input('Give me a sentence: ')
+        print(f"Using {GRAMMAR} as testing path and '{SENTENCE}' as sentence.")
+        PARSER = Parser(GRAMMAR, SENTENCE)
+        PARSER.parse()
+        PARSER.to_tree(output=True, only_s=True, draw=True)
     elif len(ARGUMENTS) == 3:
         GRAMMAR = ARGUMENTS[1]
         SENTENCE = ARGUMENTS[2]
@@ -51,14 +58,10 @@ if __name__ == '__main__':
 
         PARSER = Parser(GRAMMAR,SENTENCE)
         PARSER.parse()
-        PARSER.print_tree()
-    ################## WORK IN PROGRESS #####################################
-    ## The following lines define some parameters just for testing sake
-    ########################################################################
+        PARSER.to_tree(output=True,only_s=True,draw=True)
     else:
-        GRAMMAR =  os.path.abspath("data/rules_usami.txt")
-        SENTENCE = input('Give me a sentence: ')
-        print(f"Using {GRAMMAR} as testing path and '{SENTENCE}' as sentence.")
-        PARSER = Parser(GRAMMAR, SENTENCE)
-        PARSER.parse()
-        PARSER.to_tree(output=True)
+        print("""Usage:\n
+        python3 Parser.py <grammar file> <sentence file or string>\n
+        or
+        python3 Parser.py (with default params)\n
+        """)

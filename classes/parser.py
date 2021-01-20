@@ -71,9 +71,7 @@ class Parser(object):
 
         if os.path.isfile(sentence):
             with open(sentence, 'r') as inp:
-                self.input = inp.readlines().split()
-                # TODO must be check but I think we need
-                # self.input = [x.split() for x in self.input]
+                self.input = inp.read().split()
         else:
             self.input = sentence.split()
         if parse:
@@ -139,28 +137,6 @@ class Parser(object):
                             self.parse_table[words_to_consider - 1][starting_cell].extend(
                                 [Node(rule[0], left, right) for left in left_nodes for right in right_nodes]
                             )
-
-    def print_tree(self, output=True):
-        """
-        Print the parse tree starting with the start symbol. Alternatively it returns the string
-        representation of the tree(s) instead of printing it.
-        """
-
-        start_symbol = "S"
-        # final_parsing = [n for n in self.parse_table[-1][0]]
-        final_nodes = [n for n in self.parse_table[-1][0] if n.symbol == start_symbol]
-        if final_nodes:
-            if output:
-                print("The sentence is well-formed")
-                print("\nPossible parse(s):")
-            trees = [generate_tree(node) for node in final_nodes]
-            if output:
-                for tree in trees:
-                    print(tree)
-            else:
-                return trees
-        else:
-            print("This sentence cannot be produced!")
 
     def to_tree(self, output=True, only_s=False, draw=True):
         """
