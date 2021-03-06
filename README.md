@@ -1,3 +1,6 @@
+<img alt="GitHub" src="https://img.shields.io/github/license/amasotti/CFG_Parser">
+
+----
 # CYK-Parser for CFG Grammars
 
 Almost the same parser as in [RobMcH/cyk_parser](https://github.com/RobMcH/CYK-Parser) and [phiSgr(CYK_parser)](https://github.com/phiSgr/CYK-Parser)
